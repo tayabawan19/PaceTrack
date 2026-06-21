@@ -93,7 +93,7 @@ export async function scheduleInactivityReminder(token: string) {
     }
 
     // Fetch the user's latest run from server
-    const response = await fetch('http://192.168.100.2:5000/api/runs?limit=1', {
+    const response = await fetch('https://pacetrack-backend.onrender.com/api/runs?limit=1', {
       headers: {
         'Authorization': `Bearer ${token}`,
       },

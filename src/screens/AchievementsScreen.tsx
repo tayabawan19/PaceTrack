@@ -20,7 +20,7 @@ import { ScreenHeader } from '@/components/ScreenHeader';
 import { IconCircle } from '@/components/IconCircle';
 import { ScreenBackground } from '@/components/ui';
 
-const API_URL = 'http://192.168.100.2:5000/api';
+const API_URL = 'https://pacetrack-backend.onrender.com/api';
 
 type Achievement = {
   id: string;

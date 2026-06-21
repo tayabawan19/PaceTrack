@@ -63,7 +63,7 @@ const getLast7DaysData = (runs: any[]) => {
 };
 
 // Change this URL if your local development server IP changes
-const API_URL = 'http://192.168.100.2:5000/api';
+const API_URL = 'https://pacetrack-backend.onrender.com/api';
 
 type HomeScreenProps = {
   userName?: string;

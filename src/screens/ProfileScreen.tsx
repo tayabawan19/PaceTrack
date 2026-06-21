@@ -29,7 +29,7 @@ import {
   cancelStreakReminder,
 } from '@/utils/notifications';
 
-const API_URL = 'http://192.168.100.2:5000/api';
+const API_URL = 'https://pacetrack-backend.onrender.com/api';
 
 const GOAL_LABELS: Record<string, string> = {
   lose_weight: 'Lose Weight',

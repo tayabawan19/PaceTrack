@@ -26,7 +26,7 @@ import { cancelStreakReminder } from '@/utils/notifications';
 
 // Change this URL if your server IP changes. 
 // Standardized to match your dev computer IP: 192.168.100.5
-const RUNS_API_URL = 'http://192.168.100.2:5000/api/runs';
+const RUNS_API_URL = 'https://pacetrack-backend.onrender.com/api/runs';
 
 export type RunSummaryData = {
   distanceKm: number;
