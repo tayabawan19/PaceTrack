@@ -44,3 +44,6 @@ yarn-error.*
 
 # backend folder (separate repository)
 backend/
+
+# Android binaries
+*.apk
