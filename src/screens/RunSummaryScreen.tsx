@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import MapView, { Polyline, UrlTile } from 'react-native-maps';
+import MapView, { Polyline, PROVIDER_GOOGLE } from 'react-native-maps';
 import { Ionicons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -166,7 +166,7 @@ export function RunSummaryScreen({
           <View style={styles.mapCard}>
             <MapView
               style={styles.map}
-              provider={null as any}
+              provider={Platform.OS === 'android' ? PROVIDER_GOOGLE : undefined}
               scrollEnabled={false}
               zoomEnabled={false}
               pitchEnabled={false}
@@ -187,10 +187,6 @@ export function RunSummaryScreen({
                     }
               }
             >
-              <UrlTile
-                urlTemplate="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
-                maximumZ={19}
-              />
               {route.length > 1 && (
                 <Polyline
                   coordinates={route}

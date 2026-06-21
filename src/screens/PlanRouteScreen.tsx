@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import MapView, { Marker, Polyline, UrlTile } from 'react-native-maps';
+import MapView, { Marker, Polyline, PROVIDER_GOOGLE } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { Ionicons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
@@ -210,15 +210,11 @@ export function PlanRouteScreen({ onBackPress }: PlanRouteScreenProps) {
         ) : (
           <MapView
             style={styles.map}
-            provider={null as any}
+            provider={Platform.OS === 'android' ? PROVIDER_GOOGLE : undefined}
             showsMyLocationButton={false}
             initialRegion={mapRegion}
             onPress={handleMapPress}
           >
-            <UrlTile
-              urlTemplate="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
-              maximumZ={19}
-            />
             {/* Origin Marker (Blue Dot) */}
             {origin && (
               <Marker coordinate={origin} title="Current Location">
