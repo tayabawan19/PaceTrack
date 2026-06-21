@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import MapView, { Polyline, PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView, { Polyline, UrlTile } from 'react-native-maps';
 import { Ionicons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -183,7 +183,7 @@ export function TrackRunScreen({
         {/* Map View */}
         <MapView
           style={styles.map}
-          provider={Platform.OS === 'android' ? PROVIDER_GOOGLE : undefined}
+          provider={null as any}
           showsUserLocation
           followsUserLocation
           showsMyLocationButton={false}
@@ -194,6 +194,10 @@ export function TrackRunScreen({
             longitudeDelta: 0.005,
           }}
         >
+          <UrlTile
+            urlTemplate="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+            maximumZ={19}
+          />
           {plannedRoute && plannedRoute.length > 0 && (
             <Polyline
               coordinates={plannedRoute}
