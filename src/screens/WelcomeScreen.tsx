@@ -1,15 +1,17 @@
-import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import Animated, { FadeIn, FadeInDown } from 'react-native-reanimated';
+import { useVideoPlayer, VideoView } from 'expo-video';
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback, useState, useEffect } from 'react';
+import { useEventListener } from 'expo';
 
 import { useTheme } from '@/theme/ThemeContext';
 import { Theme } from '@/theme/themes';
 import { radius, spacing } from '@theme/spacing';
-
-const HERO_IMAGE_URI = 'https://images.unsplash.com/photo-1571008887538-b36bb32f4571?w=800';
 
 export type WelcomeScreenProps = {
   onSignUpPress: () => void;
@@ -21,20 +23,51 @@ export function WelcomeScreen({ onSignUpPress, onLogInPress }: WelcomeScreenProp
   const overlayBg = mode === 'dark' ? theme.background : '#0D0D0F';
   const styles = getStyles(theme, overlayBg);
 
+  const [hasError, setHasError] = useState(false);
+
+  const player = useVideoPlayer(require('../assets/welcome-bg.mp4'), (playerInstance) => {
+    playerInstance.loop = true;
+    playerInstance.muted = true;
+    playerInstance.play();
+  });
+
+  // Use event listener to properly react to native player status changes
+  useEventListener(player, 'statusChange', ({ status }) => {
+    if (status === 'error') {
+      setHasError(true);
+    }
+  });
+
+  // Pause video on screen blur, play on focus
+  useFocusEffect(
+    useCallback(() => {
+      if (!hasError) {
+        player.play();
+      }
+      return () => {
+        player.pause();
+      };
+    }, [player, hasError])
+  );
+
   return (
     <View style={styles.container}>
       <StatusBar style="light" />
       <Animated.View style={StyleSheet.absoluteFill} entering={FadeIn.duration(300)}>
-        <ImageBackground
-          source={{ uri: HERO_IMAGE_URI }}
-          style={StyleSheet.absoluteFill}
-          resizeMode="cover"
-        >
-          <LinearGradient
-            colors={['transparent', `${overlayBg}60`, `${overlayBg}D9`]}
+        {hasError ? (
+          <View style={[StyleSheet.absoluteFill, { backgroundColor: overlayBg }]} />
+        ) : (
+          <VideoView
+            player={player}
             style={StyleSheet.absoluteFill}
+            contentFit="cover"
+            nativeControls={false}
           />
-        </ImageBackground>
+        )}
+        <LinearGradient
+          colors={['transparent', `${overlayBg}60`, `${overlayBg}D9`]}
+          style={StyleSheet.absoluteFill}
+        />
       </Animated.View>
 
       <SafeAreaView style={styles.safeArea}>

@@ -48,3 +48,7 @@ backend/
 
 # Android binaries
 *.apk
+
+# IDEs
+.idea/
+

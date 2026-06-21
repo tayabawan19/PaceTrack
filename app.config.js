@@ -18,7 +18,7 @@ module.exports = {
     package: "com.tayyab.pacetrack",
     adaptiveIcon: {
       foregroundImage: "./assets/adaptive-icon.png",
-      backgroundColor: "#ffffff"
+      backgroundColor: "#272A2F"
     },
     edgeToEdgeEnabled: true,
     predictiveBackGestureEnabled: false,
@@ -32,7 +32,8 @@ module.exports = {
     favicon: "./assets/favicon.png"
   },
   plugins: [
-    "expo-font"
+    "expo-font",
+    "expo-video"
   ],
   extra: {
     eas: {
